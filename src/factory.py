@@ -1,9 +1,11 @@
+import json
 import logging
 import os
-import json
 import sys
 
 from flask import Flask, render_template
+
+from src.modules import bootstrap
 
 
 def create_app(config_filename: str = 'config.dev.json') -> Flask:
@@ -21,16 +23,17 @@ def create_app(config_filename: str = 'config.dev.json') -> Flask:
 
     app.logger.debug("Configurando a aplicação a partir do arquivo '%s'" % (config_filename))
     try:
-
         app.config.from_file(config_filename, load=json.load)
     except FileNotFoundError:
         app.logger.fatal("O arquivo de configuração '%s' não existe" % (config_filename))
         sys.exit(1)
 
-        @app.route('/')
-        @app.route('/index')
-        def index():
-            return render_template('index.jinja2', title="Página principal")
+    app.logger.debug("Registrando as extensões")
+    bootstrap.init_app(app)
 
-        return app
+    @app.route('/')
+    @app.route('/index')
+    def index():
+        return render_template('index.jinja2', title="Página principal")
 
+    return app

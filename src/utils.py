@@ -1,4 +1,7 @@
 from pathlib import Path
+from flask import Flask
+
+
 
 def existe_esquema(app) -> bool:
     # Se estivéssmos com um SGBD, poderíamos consultar os metadados para ver

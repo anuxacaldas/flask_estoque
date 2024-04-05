@@ -1,6 +1,7 @@
 from pathlib import Path
 from flask import Flask
-
+from flask_sqlalchemy import SQLAlchemy
+from sa.annotation import sa
 
 
 def existe_esquema(app) -> bool:
@@ -19,3 +20,20 @@ def existe_esquema(app) -> bool:
     # ajustar o env.py
     #   from src.modules import Base
     #   target_metadata = Base.metada
+
+
+class SqlAlchemy:
+    pass
+
+
+def seeding(db: SQLAlchemy, app: Flask):
+    from src.models import User
+    sentenca = sa.select(User).limit(1)
+    rset = db.session.execute(sentenca).scalar_one_or_none()
+    if rset is None:
+        usuario = User()
+        usuario.none = "Administrador do sistema"
+        usuario.mail = "admin@admin.com.br"
+        usuario.set_password("admin")
+        db.session.add(usuario)
+        db.session.commit()

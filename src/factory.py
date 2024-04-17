@@ -54,14 +54,6 @@ def create_app(config_filename: str = 'config.dev.json') -> Flask:
             return None
         return User.get_by_id(auth_id)
 
-    @user_logged_in.connect_via(app)
-    def update_login_details(sender_app, user):
-        agora = timestamp()
-
-        login_anterior, login_atual = user.dta_acesso_atual, agora
-        user.dta_acesso_atual = login_atual
-        user.dta_ultimo_acesso = login_anterior or login_atual
-
     with app.app_context():
         if not existe_esquema(app):
             app.logger.fatal("É necessário fazer a migração/upgrade do banco")

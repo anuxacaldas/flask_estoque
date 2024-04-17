@@ -21,8 +21,6 @@ class User(db.Model, TimeStampMixin, UserMixin, BasicRepositoryMixin):
     password_hash: Mapped[str] = mapped_column(String(256), nullable=False)
     email_validado: Mapped[Boolean] = mapped_column(Boolean, default=False)
     dta_validacao_email: Mapped[Optional[DateTime]] = mapped_column(DateTime, nullable=True)
-    dta_ultimo_acesso: Mapped[Optional[DateTime]] = mapped_column(DateTime, nullable=True)
-    dta_acesso_atual: Mapped[Optional[DateTime]] = mapped_column(DateTime, nullable=True)
 
     ativo: Mapped[Boolean] = mapped_column(Boolean, default=False)
 

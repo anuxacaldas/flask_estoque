@@ -71,7 +71,7 @@ def create_app(config_filename: str = 'config.dev.json') -> Flask:
                     'email': app.config.get('DEFAULT_USER_EMAIL', 'user@user.com.br'),
                     'senha': app.config.get('DEFAULT_USER_PASSWORD', "123"),
                     'ativo': False
-                }
+                },
             ]
             for usuario in usuarios:
                 app.logger.info("Adicionando usuário (%s:%s)" % (usuario.get('email'), usuario.get('senha')))
